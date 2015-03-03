@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html lang="en" ng-app="guthub">
+    <head>
+        <title>Directive 2</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/bootstrap.min.css" rel='stylesheet'>
+        <script src="angular.js/angular.js/"></script>
+        <script src="js/Directives/directives_2.js"></script>
+        <script src="js/Controller/SomeController.js"></script>
+        <style>
+            .expander {
+                border: 1px solid black;
+                width: 250px;
+            }
+            expander > .title {
+                background-color: black;
+                color: white;
+                padding: .1em .3em;
+                cursor: pointer;
+            }
+            .expander > .body {
+                padding: .1em .3em;
+            </style>
+        </head>
+        <body>
+            <div ng-controller="SomeController">
+                <expander class='expander' expander-title='title'>{{text}}</expander>
+
+            </div>
+        </body>
+    </html>

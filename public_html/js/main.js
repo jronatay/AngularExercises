@@ -106,74 +106,138 @@
  }
  })
  
-var app = angular.module('superApp', []);
-app.directive("superhero", function () {
-    return{
-        restrict: "E",
-        scope:{},
-        controller: function ($scope) {
-            $scope.abilities = [];
+ var app = angular.module('superApp', []);
+ app.directive("superhero", function () {
+ return{
+ restrict: "E",
+ scope:{},
+ controller: function ($scope) {
+ $scope.abilities = [];
+ 
+ this.addStrength = function () {
+ $scope.abilities.push("strength");
+ };
+ 
+ this.addSpeed = function () {
+ $scope.abilities.push("speed");
+ };
+ 
+ this.addFlight = function () {
+ $scope.abilities.push("flight");
+ };
+ 
+ },
+ link: function (scope, element) {
+ element.addClass("button");
+ element.bind("mouseenter", function () {
+ console.log(scope.abilities);
+ });
+ }
+ };
+ });
+ 
+ app.directive('strength', function () {
+ return{
+ require: "superhero",
+ link: function (scope, element, attrs, superHeroCtrl) {
+ superHeroCtrl.addStrength();
+ }
+ };
+ });
+ 
+ app.directive('speed', function () {
+ return{
+ require: "superhero",
+ link: function (scope, element, attrs, superHeroCtrl) {
+ superHeroCtrl.addSpeed();
+ }
+ };
+ });
+ 
+ app.directive('flight', function () {
+ return{
+ require:"superhero",
+ link:function(scope,element,attrs,superHeroCtrl){
+ superHeroCtrl.addFlight();
+ }
+ };
+ });
+ 
+ 
+ var app = angular.module("phoneApp",[]);
+ app.controller('appCtrl',function($scope){
+ 
+ });
+ app.directive('panel',function(){
+ return{
+ restrict:'E',
+ transclude:true,
+ template:'<div class="panel" ng-transclude>This is a panel Component</div>' 
+ };
+ 
+ });
+ 
+ 
+ var app = angular.module('app', []);
+ app.directive('clock', function () {
+ return{
+ restrict: 'E',
+ scope: {
+ timeZone: "@"
+ },
+ template: '<div>12:00pm {{timeZone}}</div>'
+ };
+ });
+ 
+ app.directive('panel', function () {
+ return{
+ restrict: 'E',
+ transclude: true,
+ scope: {
+ title: "@"
+ },
+ template: "<div style='border: 3px solid #000000'>" +
+ "<div class='alert-box'>{{title}}</div>" +
+ "<div ng-transclude></div></div>"
+ };
+ });
+ 
+ */
 
-            this.addStrength = function () {
-                $scope.abilities.push("strength");
+
+var app = angular.module('app', []);
+
+app.directive('country', function () {
+    return{
+        restrict: 'E',
+        controller: function () {
+            this.makeAnnouncement = function (message) {
+                console.log("Country says " + message);
             };
 
-            this.addSpeed = function () {
-                $scope.abilities.push("speed");
+        }
+
+    };
+});
+
+app.directive('state', function () {
+    return{
+        restrict: 'E',
+        controller: function () {
+            this.makeLaw = function (law) {
+                console.log("Law " + law);
             };
-
-            this.addFlight = function () {
-                $scope.abilities.push("flight");
-            };
-
-        },
-        link: function (scope, element) {
-            element.addClass("button");
-            element.bind("mouseenter", function () {
-                console.log(scope.abilities);
-            });
         }
     };
 });
 
-app.directive('strength', function () {
+app.directive('city', function () {
     return{
-        require: "superhero",
-        link: function (scope, element, attrs, superHeroCtrl) {
-            superHeroCtrl.addStrength();
+        restrict: 'E',
+        require: ["^country","^state"],
+        link: function (scope, element, attrs, ctrls) {
+            ctrls[0].makeAnnouncement("This city rocks!");
+            ctrls[1].makeLaw("Jump Higher!");
         }
     };
 });
-
-app.directive('speed', function () {
-    return{
-        require: "superhero",
-        link: function (scope, element, attrs, superHeroCtrl) {
-            superHeroCtrl.addSpeed();
-        }
-    };
-});
-
-app.directive('flight', function () {
-    return{
-        require:"superhero",
-        link:function(scope,element,attrs,superHeroCtrl){
-            superHeroCtrl.addFlight();
-        }
-    };
-});
-
-
-var app = angular.module("phoneApp",[]);
-app.controller('appCtrl',function($scope){
-    
-});
-app.directive('panel',function(){
-    return{
-      restrict:'E',
-      transclude:true,
-      template:'<div class="panel" ng-transclude>This is a panel Component</div>' 
-    };
-    
-});
-*/

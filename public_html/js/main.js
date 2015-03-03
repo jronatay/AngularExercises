@@ -243,40 +243,57 @@
  });
  
  
+ 
+ var app = angular.module('choreApp', []);
+ 
+ function choreCtrl($scope) {
+ $scope.logChore = function (chore) {
+ alert(chore + " is done!");
+ };
+ }
+ 
+ app.controller('choreCtrl', choreCtrl);
+ app.directive('kid', function () {
+ return{
+ restrict: 'E',
+ scope: {
+ done: "&"
+ },
+ template: '<input type="text" ng-model="chore">{{chore}}' +
+ '{{chore}}' +
+ '<div class="button" ng-click="done({chore: chore})">I\'m done! </div>'
+ };
+ });
+ 
+ var app=angular.module('drinkApp',[]);
+ app.controller('appCtrl',function($scope){
+ $scope.ctrlFlavor='blackberry';
+ });
+ app.directive('drink',function(){
+ return{
+ scope:{
+ flavor:"="
+ },
+ template:'<div>{{flavor}}</div>'
+ 
+ };
+ });
+ 
+ */
 
-var app = angular.module('choreApp', []);
-
-function choreCtrl($scope) {
-    $scope.logChore = function (chore) {
-        alert(chore + " is done!");
-    };
-}
-
-app.controller('choreCtrl', choreCtrl);
-app.directive('kid', function () {
-    return{
-        restrict: 'E',
-        scope: {
-            done: "&"
-        },
-        template: '<input type="text" ng-model="chore">{{chore}}' +
-                '{{chore}}' +
-                '<div class="button" ng-click="done({chore: chore})">I\'m done! </div>'
+var app = angular.module('phoneApp', []);
+app.controller('appCtrl', function ($scope) {
+    $scope.callHome = function (message) {
+        alert(message);
     };
 });
 
-*/
-
-var app=angular.module('drinkApp',[]);
-app.controller('appCtrl',function($scope){
-    $scope.ctrlFlavor='blackberry';
-});
-app.directive('drink',function(){
-    return{
-      scope:{
-          flavor:"="
-      },
-      template:'<div>{{flavor}}</div>'
-      
-    };
+app.directive('phone',function(){
+   return {
+     scope:{
+         dial:"&"
+     },
+     template:'<input type="text" ng-model="value">'+
+             '<div class="button" ng-click="dial({message:value})">Call Home!</div>'
+   }; 
 });

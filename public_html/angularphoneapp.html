@@ -24,12 +24,26 @@ and open the template in the editor.
             </div>
             
         </div>
-        -->
+      
         <div ng-app="phoneApp">
             <div ng-controller='appCtrl'>
                 <div phone dial="callHome(message)"></div>
             </div>
         </div>
+       
+        <div ng-app='phoneApp'>
+            <div ng-controller="appCtrl">
+                <phone number="555-1234" network="network" make-call="leaveVoiceMail(number,message)"></phone>
+                <phone number="867-5309" network="network" make-call="leaveVoiceMail(number,message)"></phone>
+                <phone number="911" network="network" make-call="leaveVoiceMail(number,message)"></phone>
+            </div>
+        </div>
+         -->
+         <div ng-app="phoneApp">
+             <div ng-controller="appCtrl">
+                 <div class="button" ng-click="AppCtrl.sayHi()">Click Me !</div>
+             </div>
+         </div>
             
 
 

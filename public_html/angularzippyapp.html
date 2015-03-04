@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html lang="en" >
+    <head>
+        <title>Angular JS Tutorial</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/bootstrap.min.css" rel='stylesheet'>
+
+        <script src="angular.js/angular.js/angular.js"></script>
+        <script src='js/main.js'></script>
+    </head>
+    <body>
+        <div ng-app="app">
+            <script type="text/ng-template" id="zippy.html">
+                <div><h3 ng-click="toggleContent()">{{title}}</h3>
+                <div ng-show="isContentVisible" ng-transclude></div>
+                </div>
+            </script>
+
+            <input type="text" ng-model="model.title">
+            <input type="text" ng-model="model.content">
+
+            <zippy title="{{model.title}}">
+                The content is: {{model.content}}
+            </zippy>
+        </div>
+
+
+
+    </body>
+</html>

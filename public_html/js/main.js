@@ -279,21 +279,141 @@
  };
  });
  
+ 
+ 
+ var app = angular.module('phoneApp', []);
+ app.controller('appCtrl', function ($scope) {
+ $scope.callHome = function (message) {
+ alert(message);
+ };
+ });
+ 
+ app.directive('phone',function(){
+ return {
+ scope:{
+ dial:"&"
+ },
+ template:'<input type="text" ng-model="value">'+
+ '<div class="button" ng-click="dial({message:value})">Call Home!</div>'
+ }; 
+ });
+ 
+ var app = angular.module('phoneApp', []);
+ app.controller('appCtrl', function ($scope) {
+ $scope.leaveVoiceMail = function (number, message) {
+ alert("Number: " + number + " said: " + message);
+ };
+ });
+ 
+ app.directive('phone', function () {
+ return{
+ restrict:'E',
+ scope:{
+ number:'@',
+ network:'@',
+ makeCall:'&'
+ 
+ 
+ },
+ templateUrl:"phone.html",
+ link:function(scope){
+ scope.networks=["Globe","Smarts","Sun"];
+ scope.network=scope.networks[0];
+ }
+ 
+ };
+ });
+ 
+ 
+ 
+ var app = angular.module('phoneApp', []);
+ 
+ var ctrls={};
+ 
+ ctrls.appCtrl=function ($scope) {
+ this.sayHi = function () {
+ alert("Hi !");
+ };
+ 
+ return $scope.AppCtrl = this;
+ };
+ 
+ app.controller(ctrls);
+ 
+ 
+ 
+ var app=angular.module('app',[]);
+ 
+ app.controller('RoomCtrl',function($scope){
+ this.openDoor=function(){
+ alert("creak");
+ };
+ this.buttonTitle="I'm a button";
+ });
+ 
+ 
+ var app = angular.module("app", []);
+ 
+ 
+ app.directive("dumbPassword", function () {
+ return {
+ restrict: "E",
+ replace: true,
+ templateUrl: "dumbpass.html",
+ link: function (scope, element) {
+ scope.$watch("model.input", function (value) {
+ if(value === "password") {
+ element.children(1).toggleClass("alert-box alert");
+ }
+ });
+ }
+ };
+ });
+ 
+ 
+ 
+ var app = angular.module("app", []);
+ 
+ 
+ app.directive("dumbPassword", function () {
+ var validElement = angular.element('<div>{{ model.input }}</div>');
+ 
+ var link = function (scope) {
+ scope.$watch("model.input", function (value) {
+ if(value === "password") {
+ validElement.toggleClass("alert-box alert");
+ }
+ });
+ };
+ 
+ return {
+ restrict: "E",
+ replace: true,
+ templateUrl: "dumbpass.html",
+ compile: function (tElem) {
+ tElem.append(validElement);
+ 
+ return link;
+ }
+ }
+ });
+ 
  */
 
-var app = angular.module('phoneApp', []);
-app.controller('appCtrl', function ($scope) {
-    $scope.callHome = function (message) {
-        alert(message);
+var app = angular.module('app', []);
+app.directive('zippy', function () {
+    return{
+        restrict: 'E',
+        transclude: true,
+        scope: {
+            title: "@"
+        },
+        templateUrl: "zippy.html",
+        link: function (scope) {
+            scope.isContentVisible = false;
+            scope.toggleContent = function () {
+                scope.isContentVisible = !scope.isContentVisible;
+            };
+        }
     };
-});
-
-app.directive('phone',function(){
-   return {
-     scope:{
-         dial:"&"
-     },
-     template:'<input type="text" ng-model="value">'+
-             '<div class="button" ng-click="dial({message:value})">Call Home!</div>'
-   }; 
 });

@@ -399,44 +399,99 @@
  });
  
  
+ 
+ var app = angular.module("app", []);
+ 
+ app.directive("zippy", function($templateCache){
+ console.log($templateCache.get("zippy.html"));
+ 
+ return {
+ restrict: "E",
+ transclude: true,
+ scope: {
+ title: "@"
+ },
+ templateUrl: "zippy.html",
+ link: function(scope){
+ scope.isContentVisible = false;
+ scope.toggleContent = function(){
+ scope.isContentVisible = !scope.isContentVisible;
+ }
+ };
+ };
+ });
+ 
+ 
+ var app = angular.module("app", []);
+ 
+ app.config(function ($routeProvider) {
+ $routeProvider.when("/angularrouting.html/",
+ {
+ templateUrl: "app.html",
+ controller: "AppCtrl"
+ }
+ )
+ .when('/angularrouting.html/pizza', {
+ template: "Yum!!!"
+ })
+ .otherwise({
+ template:'This doesnt Exist' 
+ });
+ 
+ });
+ //We can't define routes in controller and  services
+ app.controller("AppCtrl", function ($scope) {
+ 
+ $scope.model = {
+ message: "This is my app!!!"
+ }
+ });
+ 
+ 
+ //Route Param
+ 
+ var app = angular.module('app', []);
+ app.config(function ($routeProvider) {
+ $routeProvider
+ .when('/angularrouting.html/:map/angularrouting.html/:country/angularrouting.html/:state/angularrouting.html/:city', {
+ templateUrl: "app.html",
+ controller: AppCtrl
+ });
+ });
+ 
+ app.controller('AppCtrl',function($scope,$routeParam){
+ $scope.model={
+ message:"Address: "+
+ $routeParam.country + ", "+
+ $routeParam.state +", "+
+ $routeParam.city
+ };
+ });
+ 
+ */
 
-var app = angular.module("app", []);
+var app = angular.module('app', []);
 
-app.directive("zippy", function($templateCache){
-  console.log($templateCache.get("zippy.html"));
+app.config(function ($routeProvider) {
+    $routeProvider
+            .when("/angularrouting.html/", {
+                templateUrl: "app.html",
+                controller: "AppCtrl"
+            });
+});
 
-  return {
-    restrict: "E",
-    transclude: true,
-    scope: {
-      title: "@"
-    },
-    templateUrl: "zippy.html",
-    link: function(scope){
-      scope.isContentVisible = false;
-      scope.toggleContent = function(){
-      scope.isContentVisible = !scope.isContentVisible;
-      }
+app.controller('AppCtrl', function ($scope, $q) {
+    var defer = $q.defer();
+    defer.promise.then(function () {
+        alert("I Promise I will Show up");
+    }).then(function(){
+        alert("ME TOO !!!");
+    }).then(function(){
+        alert("Siyempre pati ako magpapakita BWAHAHAHAHA!");
+    });
+
+    defer.resolve();
+    $scope.model = {
+        message: "This is my App"
     };
-  };
 });
-*/
-
-var app = angular.module("app", []);
-
-app.config(function($routeProvider){
-  $routeProvider.when("/",
-    {
-      templateUrl: "app.html",
-      controller: "AppCtrl"
-    }
-  );
-});
-
-app.controller("AppCtrl", function($scope){
-  $scope.model = {
-    message: "This is my app!!!"
-  }
-});
-
-    

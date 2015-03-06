@@ -398,22 +398,45 @@
  }
  });
  
- */
+ 
 
-var app = angular.module('app', []);
-app.directive('zippy', function () {
-    return{
-        restrict: 'E',
-        transclude: true,
-        scope: {
-            title: "@"
-        },
-        templateUrl: "zippy.html",
-        link: function (scope) {
-            scope.isContentVisible = false;
-            scope.toggleContent = function () {
-                scope.isContentVisible = !scope.isContentVisible;
-            };
-        }
+var app = angular.module("app", []);
+
+app.directive("zippy", function($templateCache){
+  console.log($templateCache.get("zippy.html"));
+
+  return {
+    restrict: "E",
+    transclude: true,
+    scope: {
+      title: "@"
+    },
+    templateUrl: "zippy.html",
+    link: function(scope){
+      scope.isContentVisible = false;
+      scope.toggleContent = function(){
+      scope.isContentVisible = !scope.isContentVisible;
+      }
     };
+  };
 });
+*/
+
+var app = angular.module("app", []);
+
+app.config(function($routeProvider){
+  $routeProvider.when("/",
+    {
+      templateUrl: "app.html",
+      controller: "AppCtrl"
+    }
+  );
+});
+
+app.controller("AppCtrl", function($scope){
+  $scope.model = {
+    message: "This is my app!!!"
+  }
+});
+
+    
